@@ -10,6 +10,7 @@ RUN install-php-extensions @composer \
     apcu opcache intl \
     pdo_sqlite \
     mbstring \
+    redis \
     xdebug \
     zip
 

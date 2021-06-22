@@ -9,10 +9,20 @@ services:
       - .:/var/www
       - ${COMPOSER_HOME:-/tmp/composer}:/home/www-data/.composer # Share composer cache
     user: "${VOLUME_USER_ID:-www-data}:www-data"
+    links:
+      - redis
+    environment:
+      - REDIS_URL=redis://cache
     networks:
       sfnetwork:
         aliases:
           - demo.local
+
+  redis:
+    image: redis
+    container_name: cache
+    expose:
+      - 6379
 
 networks:
   sfnetwork:
