@@ -1,0 +1,19 @@
+version: '3.6'
+services:
+  app:
+    build: .docker/apachephp
+    restart: unless-stopped
+    ports:
+      - 8081:80
+    volumes:
+      - .:/var/www
+      - ${COMPOSER_HOME:-/tmp/composer}:/home/www-data/.composer # Share composer cache
+    user: "${VOLUME_USER_ID:-www-data}:www-data"
+    networks:
+      sfnetwork:
+        aliases:
+          - demo.local
+
+networks:
+  sfnetwork:
+    driver: bridge

@@ -10,7 +10,7 @@
 More information on [symfony website](https://symfony.com/doc/5.2/reference/requirements.html).
 
 ## Features developed
-Usage cache system (redis).
+Usage [cache system](https://symfony.com/doc/current/cache.html#cache-configuration-with-frameworkbundle) (redis).
 
 ## Installation
 Command lines:
@@ -20,7 +20,6 @@ Command lines:
 composer install
 
 # (optional) Copy and edit configuration values ".env.local"
-
 php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate -n
 
@@ -31,14 +30,10 @@ php bin/console doctrine:fixtures:load -n
 For the asset symlink install, launch a terminal on administrator in windows environment.
 
 ## Usage
-Just execute this command to run the built-in web server _(require [symfony installer](https://symfony.com/download))_ and access the application in your browser at <http://localhost:8000>:
+Just execute this command to run the built-in web server _(require [symfony installer](https://symfony.com/download))_ and access the application in your browser at <http://localhost:8081>:
 
 ```bash
-# Dev env
-symfony server:start
-
-# Test env
-APP_ENV=test php -d variables_order=EGPCS -S 127.0.0.1:8000 -t public/
+docker-composer up -d
 ```
 
 Alternatively, you can [configure a web server](https://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html) like Nginx or Apache to run the application.
