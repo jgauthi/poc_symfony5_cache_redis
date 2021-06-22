@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+{% set title = 'Dossier #' ~ dossier.id %}
+
+{% block body %}
+    <p>
+        Title: {{ dossier.title }}, client: {{ dossier.client.name }}.<br>
+        Date: {{ dossier.createdDate|date('d/m/Y') }} by {{ dossier.author.name }}<br>
+        Active: {% if dossier.active %}Yes{% else %}No{% endif %}<br>
+        {% if dossier.categories is not empty %}
+            Categories:
+            <em>
+                {% for category in dossier.categories %}
+                    {{ category.title }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </em>
+        {% endif %}
+    </p>
+    <p>{{ dossier.content }}</p>
+{% endblock %}

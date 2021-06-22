@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+{% set title = 'Dossier List' %}
+
+{% block body %}
+    {% for dossier in dossierList %}
+        <div>
+            <p>
+                Title: {{ dossier.title }}, client: {{ dossier.client.name }}.<br>
+                Date: {{ dossier.createdDate|date('d/m/Y') }}<br>
+                <a href="{{ path('dossierItem', {'id': dossier.id}) }}">Consult dossier</a>
+            </p>
+        </div>
+    {% else %}
+        <p>No dossiers.</p>
+    {% endfor %}
+
+    <div class="navigation">
+        {{ knp_pagination_render(dossierList) }}
+    </div>
+{% endblock %}

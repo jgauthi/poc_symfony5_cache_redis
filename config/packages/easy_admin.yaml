@@ -1,0 +1,65 @@
+easy_admin:
+  entities:
+    # List the entity class name you want to manage
+    Category:
+      class: App\Entity\Category
+      list:
+        fields:
+          - id
+          - title
+          - { property: 'image', type: 'image', label: 'Image', base_path: '%app.path.category_images%' }
+          - updatedAt
+      form:
+        fields:
+          - title
+          - { property: 'file', type: 'vich_image', label: 'Image' }
+          - dossier
+    Client:
+      class: App\Entity\Client
+    Dossier:
+      class: App\Entity\Dossier
+      form:
+        fields:
+          - title
+          - author
+          - content
+          - active
+          - categories
+          - client
+    User:
+      class: App\Entity\User
+      list:
+        fields:
+          - id
+          - username
+          - name
+          - email
+          - enabled
+          - roles
+      new:
+        fields:
+          - username
+          - name
+          - email
+          - enabled
+          - { property: 'plainPassword', type: 'text', label: 'Password' }
+          - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_COMMENTATOR': 'ROLE_COMMENTATOR', 'ROLE_WRITER': 'ROLE_WRITER', 'ROLE_EDITOR': 'ROLE_EDITOR', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
+      edit:
+        fields:
+          - { property: 'id', type_options: { disabled: true }}
+          - { property: 'username', type_options: { disabled: true }}
+          - name
+          - email
+          - enabled
+          - { property: 'plainPassword', type: 'text', label: 'Edit password (optional)', type_options: { required: false } }
+          - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_COMMENTATOR': 'ROLE_COMMENTATOR', 'ROLE_WRITER': 'ROLE_WRITER', 'ROLE_EDITOR': 'ROLE_EDITOR', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
+          - dossiers
+
+  design:
+    menu:
+      - { entity: 'Category', icon: 'bullhorn' }
+      - { entity: 'Client', icon: 'bullhorn' }
+      - { entity: 'Dossier', icon: 'bullhorn' }
+      - { entity: 'User', icon: 'users' }
+      - { label: 'Symfony doc', url: 'https://symfony.com/doc/current/', target: '_blank', icon: 'code' }
+      - { label: 'Front End', route: 'dossierList', icon: 'home' }
