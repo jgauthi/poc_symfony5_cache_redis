@@ -19,6 +19,7 @@ class DossierController extends AbstractController
      */
     public function dossierList(Request $request, PaginatorInterface $paginator): Response
     {
+        sleep(1); // add delay for test Redis on prod
         $query = $this->dossierRepository->findVisibleQuery();
         $dossierList = $paginator->paginate($query, $request->query->getInt('page', 1), 6);
 
@@ -32,6 +33,8 @@ class DossierController extends AbstractController
      */
     public function dossierItem(Dossier $dossier): Response
     {
+        sleep(4); // add delay for test Redis on prod
+
         return $this->render('dossierItem.html.twig', [
             'dossier' => $dossier,
         ]);
