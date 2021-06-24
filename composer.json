@@ -7,6 +7,7 @@
     "php": ">=8.0",
     "ext-ctype": "*",
     "ext-iconv": "*",
+    "ext-redis": "*",
     "ext-simplexml": "*",
     "easycorp/easyadmin-bundle": "2.*",
     "knplabs/knp-paginator-bundle": "*",

@@ -13,5 +13,6 @@ framework:
 
   #esi: true
   #fragments: true
+  http_cache: true
   php_errors:
     log: true
