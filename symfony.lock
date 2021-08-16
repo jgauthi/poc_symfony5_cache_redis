@@ -344,6 +344,9 @@
     "symfony/orm-pack": {
         "version": "v1.0.6"
     },
+    "symfony/password-hasher": {
+        "version": "v5.3.4"
+    },
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.13.1"
     },

@@ -1,21 +1,30 @@
 security:
-  # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
-  encoders:
-    App\Entity\User: auto
+  # https://symfony.com/doc/current/security/authenticator_manager.html
+  enable_authenticator_manager: true
+  password_hashers:
+    # Our user class and the algorithm we'll use to encode passwords
+    # 'auto' means to let Symfony choose the best possible password hasher (Argon2 or Bcrypt)
+    # https://symfony.com/doc/current/security.html#c-encoding-passwords
+    App\Entity\User: 'auto'
   providers:
-    database:
-      entity:
-        class: App\Entity\User
-        property: username
+    database_users:
+      entity: { class: App\Entity\User, property: username }
+
   firewalls:
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
     main:
-      anonymous: true
-      guard:
-        authenticators:
-          - App\Security\UserAuthenticator
+      # this firewall applies to all URLs
+      pattern: ^/
+      lazy: true
+      provider: database_users
+      form_login:
+        check_path: app_login
+        login_path: app_login
+        enable_csrf: true
+        default_target_path: dossierList
+      entry_point: 'form_login'
       logout:
         path: app_logout
       remember_me:
@@ -33,6 +42,7 @@ security:
   # Note: Only the *first* access control that matches will be used
   access_control:
     - { path: ^/admin, roles: ROLE_ADMIN }
+
   role_hierarchy:
     ROLE_WRITER: ROLE_COMMENTATOR
     ROLE_ADMIN: [ROLE_WRITER, ROLE_EDITOR]
