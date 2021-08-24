@@ -8,28 +8,20 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+#[ORM\Entity(repositoryClass: \App\Repository\CategoryRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
- * @ORM\HasLifecycleCallbacks
  * @Vich\Uploadable
  */
 class Category
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: 'integer')]
     private ?int $id;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
+    #[ORM\Column(type: 'string', length: 100)]
     private string $title;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private string $image = '';
 
     /**
@@ -37,14 +29,10 @@ class Category
      */
     public ?File $file = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTimeInterface $updatedAt;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Dossier", inversedBy="categories")
-     */
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Dossier', inversedBy: 'categories')]
     private Collection $dossier;
 
     public function __construct()
@@ -129,9 +117,7 @@ class Category
         return $this->updatedAt;
     }
 
-    /**
-     * @ORM\PreUpdate()
-     */
+    #[ORM\PreUpdate]
     public function setUpdatedAt(): self
     {
         $this->updatedAt = new DateTime;

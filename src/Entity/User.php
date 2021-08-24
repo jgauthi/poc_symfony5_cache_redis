@@ -4,15 +4,14 @@ namespace App\Entity;
 use Doctrine\Common\Collections\{ArrayCollection, Collection};
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\{PasswordAuthenticatedUserInterface, UserInterface};
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity("username", errorPath="username")
- * @UniqueEntity("email")
- */
-class User implements UserInterface
+#[ORM\Entity(repositoryClass: \App\Repository\UserRepository::class),
+    UniqueEntity('username', errorPath: 'username'),
+    UniqueEntity('email')
+]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public const ROLE_COMMENTATOR = 'ROLE_COMMENTATOR';
     public const ROLE_WRITER = 'ROLE_WRITER';
@@ -21,67 +20,42 @@ class User implements UserInterface
 
     public const DEFAULT_ROLES = [self::ROLE_COMMENTATOR];
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: 'integer')]
     private ?int $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(min="6", max="255")
-     */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\Length(min: 6, max: 255), Assert\NotBlank]
     private string $username;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Regex(
-     *     pattern="#(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{7,}#",
-     *     message="Password must be 7 characters long and contain at least one digit, one uppercase letter and one lower case letter."
-     * )
-     */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\Regex(
+        pattern: '#(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{7,}#',
+        message: 'Password must be 7 characters long and contain at least one digit, one uppercase letter and one lower case letter.'
+    )]
     private string $password;
 
-    /**
-     * Plain password. Used for model validation. Must not be persisted.
-     *
-     * @Assert\Regex(
-     *     pattern="#(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{7,}#",
-     *     message="Password must be 7 characters long and contain at least one digit, one uppercase letter and one lower case letter."
-     * )
-     */
+    // Plain password. Used for model validation. Must not be persisted.
+    #[Assert\Regex(
+        pattern: '#(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{7,}#',
+        message: 'Password must be 7 characters long and contain at least one digit, one uppercase letter and one lower case letter.'
+    )]
     private ?string $plainPassword = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(min="6", max="255")
-     */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\Length(min: 6, max: 255), Assert\NotBlank]
     private string $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     * @Assert\Length(min="6", max="255")
-     */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\Email, Assert\Length(min: 6, max: 255), Assert\NotBlank]
     private string $email;
 
-    /**
-     * @ORM\Column(type="simple_array")
-     */
+    #[ORM\Column(type: 'simple_array')]
     private array $roles;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private bool $enabled = false;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Dossier", mappedBy="author", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\Dossier', mappedBy: 'author', orphanRemoval: true)]
     private Collection $dossiers;
 
     public function __construct()
@@ -100,24 +74,21 @@ class User implements UserInterface
         return $this->id;
     }
 
-    /**
-     * @deprecated since Symfony 5.3, use getUserIdentifier() instead
-     */
     public function getUsername(): string
-    {
-        return $this->getUserIdentifier();
-    }
-
-    public function getUserIdentifier(): string
     {
         return $this->username;
     }
 
-    public function setUserIdentifier(string $username): self
+    public function setUsername(string $username): self
     {
         $this->username = $username;
 
         return $this;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->getUsername();
     }
 
     public function getPassword(): ?string

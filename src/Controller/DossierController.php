@@ -14,9 +14,7 @@ class DossierController extends AbstractController
     {
     }
 
-    /**
-     * @Route("/", name="dossierList")
-     */
+    #[Route('/', name: 'dossierList')]
     public function dossierList(Request $request, PaginatorInterface $paginator): Response
     {
         sleep(1); // add delay for test Redis on prod
@@ -28,9 +26,7 @@ class DossierController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/dossier/{id}", name="dossierItem")
-     */
+    #[Route('/dossier/{id}', name: 'dossierItem', requirements: ['id' => '\d+'])]
     public function dossierItem(Dossier $dossier): Response
     {
         sleep(4); // add delay for test Redis on prod

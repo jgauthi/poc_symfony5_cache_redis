@@ -6,54 +6,32 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\{ArrayCollection, Collection};
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\DossierRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: \App\Repository\DossierRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Dossier
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: 'integer')]
     private ?int $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private string $title;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private DateTimeInterface $createdDate;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private bool $active;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private string $content;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="dossier")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Client', inversedBy: 'dossier'), ORM\JoinColumn(nullable: false)]
     private Client $client;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category", mappedBy="dossier")
-     */
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Category', mappedBy: 'dossier')]
     private Collection $categories;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="dossiers")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'dossiers'), ORM\JoinColumn(nullable: false)]
     private User $author;
 
     public function __construct()
@@ -88,9 +66,7 @@ class Dossier
         return $this->createdDate;
     }
 
-    /**
-     * @ORM\PrePersist()
-     */
+    #[ORM\PrePersist]
     public function setCreatedDate(): self
     {
         $this->createdDate = new DateTimeImmutable;

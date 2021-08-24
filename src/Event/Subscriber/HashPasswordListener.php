@@ -5,14 +5,14 @@ use App\Entity\User;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * Encode password before insert/update on database (Doctrine Event Subscriber).
  */
 class HashPasswordListener implements EventSubscriber
 {
-    public function __construct(private UserPasswordEncoderInterface $encoder)
+    public function __construct(private UserPasswordHasherInterface $hasher)
     {
     }
 
@@ -23,8 +23,8 @@ class HashPasswordListener implements EventSubscriber
             return;
         }
 
-        $encoded = $this->encoder->encodePassword($user, $password);
-        $user->setPassword($encoded);
+        $hashed = $this->hasher->hashPassword($user, $password);
+        $user->setPassword($hashed);
     }
 
     /**
