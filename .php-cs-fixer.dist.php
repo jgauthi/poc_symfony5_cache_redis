@@ -28,6 +28,7 @@ return (new PhpCsFixer\Config)
         'no_useless_else' => true,
         'no_useless_return' => true,
         'ordered_imports' => true,
+        'phpdoc_summary' => false, // In comments: add useless "." at ending and make urls in error
         'php_unit_strict' => true,
         'phpdoc_order' => true,
         'semicolon_after_instruction' => true,
