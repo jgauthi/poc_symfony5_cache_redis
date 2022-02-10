@@ -10,17 +10,17 @@
     "ext-redis": "*",
     "ext-simplexml": "*",
     "doctrine/annotations": "^1.0",
-    "doctrine/doctrine-bundle": "^2.4",
-    "doctrine/doctrine-migrations-bundle": "^3.1",
-    "doctrine/orm": "^2.9",
+    "doctrine/doctrine-bundle": "^2.5",
+    "doctrine/doctrine-migrations-bundle": "^3.2",
+    "doctrine/orm": "^2.11",
     "easycorp/easyadmin-bundle": "2.*",
     "knplabs/knp-paginator-bundle": "*",
-    "sensio/framework-extra-bundle": "6.*",
+    "sensio/framework-extra-bundle": "^6.1",
     "symfony/asset": "*",
     "symfony/console": "*",
     "symfony/dotenv": "*",
     "symfony/expression-language": "*",
-    "symfony/flex": "1.*",
+    "symfony/flex": "^1.17|^2",
     "symfony/form": "*",
     "symfony/framework-bundle": "*",
     "symfony/intl": "*",
@@ -29,6 +29,7 @@
     "symfony/property-access": "*",
     "symfony/property-info": "*",
     "symfony/proxy-manager-bridge": "*",
+    "symfony/runtime": "*",
     "symfony/security-bundle": "*",
     "symfony/serializer": "*",
     "symfony/string": "*",
@@ -56,6 +57,11 @@
     "symfony/web-profiler-bundle": "*"
   },
   "config": {
+    "allow-plugins": {
+      "composer/package-versions-deprecated": true,
+      "symfony/flex": true,
+      "symfony/runtime": true
+    },
     "optimize-autoloader": true,
     "preferred-install": {
       "*": "dist"
@@ -93,7 +99,10 @@
   "extra": {
     "symfony": {
       "allow-contrib": false,
-      "require": "5.3.*"
+      "require": "5.4.*"
     }
-  }
+  },
+  "authors": [
+    { "name": "jgauthi", "homepage": "https://github.com/jgauthi", "role": "Developer" }
+  ]
 }

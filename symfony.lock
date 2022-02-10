@@ -2,6 +2,9 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "composer/pcre": {
+        "version": "1.0.1"
+    },
     "composer/semver": {
         "version": "3.2.4"
     },
@@ -388,6 +391,9 @@
             "version": "4.2",
             "ref": "5374e24d508ba8fd6ba9eb15170255fdb778316a"
         }
+    },
+    "symfony/runtime": {
+        "version": "v5.4.3"
     },
     "symfony/security-bundle": {
         "version": "3.3",
