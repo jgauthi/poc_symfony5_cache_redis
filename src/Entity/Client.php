@@ -22,7 +22,7 @@ class Client
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private ?string $country;
 
-    #[ORM\OneToMany(targetEntity: 'App\Entity\Dossier', mappedBy: 'client', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Dossier::class, mappedBy: 'client', orphanRemoval: true)]
     private Collection $dossier;
 
     public function __construct()

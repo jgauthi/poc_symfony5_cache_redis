@@ -10,9 +10,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: \App\Repository\CategoryRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-/**
- * @Vich\Uploadable
- */
+#[Vich\Uploadable]
 class Category
 {
     #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: 'integer')]
@@ -24,15 +22,13 @@ class Category
     #[ORM\Column(type: 'string', length: 255)]
     private string $image = '';
 
-    /**
-     * @Vich\UploadableField(mapping="category_images", fileNameProperty="image")
-     */
+    #[Vich\UploadableField(mapping: 'category_images', fileNameProperty: 'image')]
     public ?File $file = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTimeInterface $updatedAt;
 
-    #[ORM\ManyToMany(targetEntity: 'App\Entity\Dossier', inversedBy: 'categories')]
+    #[ORM\ManyToMany(targetEntity: Dossier::class, inversedBy: 'categories')]
     private Collection $dossier;
 
     public function __construct()

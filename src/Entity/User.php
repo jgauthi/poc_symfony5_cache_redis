@@ -50,17 +50,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $email;
 
     #[ORM\Column(type: 'simple_array')]
-    private array $roles;
+    private array $roles = self::DEFAULT_ROLES;
 
     #[ORM\Column(type: 'boolean')]
     private bool $enabled = false;
 
-    #[ORM\OneToMany(targetEntity: 'App\Entity\Dossier', mappedBy: 'author', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Dossier::class, mappedBy: 'author', orphanRemoval: true)]
     private Collection $dossiers;
 
     public function __construct()
     {
-        $this->roles = self::DEFAULT_ROLES;
         $this->dossiers = new ArrayCollection;
     }
 
