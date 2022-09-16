@@ -27,13 +27,16 @@ php bin/console doctrine:migrations:migrate -n
 php bin/console doctrine:fixtures:load -n
 ```
 
-For the asset symlink install, launch a terminal on administrator in windows environment.
+For the asset symlink install, launch a terminal on administrator in Windows environment.
 
 ## Usage
 Just execute this command to run the built-in web server _(require [symfony installer](https://symfony.com/download))_ and access the application in your browser at <http://localhost:8081>:
 
 ```bash
 docker-compose up -d
+
+# Access to redis cli
+docker-compose exec redis redis-cli
 ```
 
 Alternatively, you can [configure a web server](https://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html) like Nginx or Apache to run the application.
