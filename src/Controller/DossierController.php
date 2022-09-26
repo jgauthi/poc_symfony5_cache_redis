@@ -3,13 +3,11 @@ namespace App\Controller;
 
 use App\Entity\Dossier;
 use App\Repository\DossierRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{Request, Response};
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Cache\CacheInterface;
-use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Contracts\Cache\{CacheInterface, ItemInterface};
 
 class DossierController extends AbstractController
 {
@@ -18,7 +16,7 @@ class DossierController extends AbstractController
     }
 
     #[Route('/', name: 'dossierList')]
-    public function dossierList(Request $request, PaginatorInterface $paginator, CacheInterface $cache): Response
+    public function dossierList(Request $request, PaginatorInterface $paginator): Response
     {
         $currentPage = $request->query->getInt('page', 1);
 
@@ -41,7 +39,7 @@ class DossierController extends AbstractController
     }
 
     #[Route('/dossier/{id}', name: 'dossierItem', requirements: ['id' => '\d+'])]
-    public function dossierItem(int $id, CacheInterface $cache, EntityManagerInterface $entityManager): Response
+    public function dossierItem(int $id, CacheInterface $cache): Response
     {
         // $cache->delete('dossier'.$id); // debug
         $dossier = $cache->get('dossier'.$id, function (ItemInterface $item) use ($id): ?Dossier {
@@ -61,7 +59,7 @@ class DossierController extends AbstractController
         }
 
         // https://stackoverflow.com/questions/45034146/symfony-cache-component-and-lazy-loading
-        $dossier = $entityManager->merge($dossier);
+        // $dossier = $entityManager->merge($dossier); // Not useful with ManyToOne EAGER fetch
 
         return $this->render('dossierItem.html.twig', [
             'dossier' => $dossier,

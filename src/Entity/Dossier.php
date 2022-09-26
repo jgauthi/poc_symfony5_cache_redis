@@ -25,13 +25,13 @@ class Dossier
     #[ORM\Column(type: 'text')]
     private string $content;
 
-    #[ORM\ManyToOne(targetEntity: Client::class, inversedBy: 'dossier'), ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Client::class, inversedBy: 'dossier', fetch: 'EAGER'), ORM\JoinColumn(nullable: false)]
     private Client $client;
 
-    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'dossier')]
+    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'dossier', fetch: 'EAGER')]
     private Collection $categories;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'dossiers'), ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'dossiers', fetch: 'EAGER'), ORM\JoinColumn(nullable: false)]
     private User $author;
 
     public function __construct()
