@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{Request, Response};
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class DossierController extends AbstractController
 {
@@ -43,10 +44,16 @@ class DossierController extends AbstractController
     public function dossierItem(int $id, CacheInterface $cache, EntityManagerInterface $entityManager): Response
     {
         // $cache->delete('dossier'.$id); // debug
-        $dossier = $cache->get('dossier'.$id, function () use ($id): ?Dossier {
-            sleep(4);
+        $dossier = $cache->get('dossier'.$id, function (ItemInterface $item) use ($id): ?Dossier {
+            $item->expiresAfter(3600);
 
-            return $this->dossierRepository->find($id);
+            $dossier = $this->dossierRepository->find($id);
+            sleep(4);
+            if (!empty($dossier)) {
+                $dossier->setContent($dossier->getContent().PHP_EOL.'Cached on '.date(DATE_ATOM));
+            }
+
+            return $dossier;
         });
 
         if (empty($dossier)) {

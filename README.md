@@ -10,7 +10,7 @@
 More information on [symfony website](https://symfony.com/doc/5.4/reference/requirements.html).
 
 ## Features developed
-Usage [cache system](https://symfony.com/doc/current/cache.html#cache-configuration-with-frameworkbundle) (redis).
+Usage [cache system](https://symfony.com/doc/5.4/cache.html#cache-configuration-with-frameworkbundle) (redis).
 
 ## Installation
 Command lines:
