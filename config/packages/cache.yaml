@@ -9,7 +9,12 @@ framework:
 
     # Redis: https://akashicseer.com/web-development/how-to-install-and-configure-redis-in-symfony-5-for-local-testing/
     app: cache.adapter.redis
-    default_redis_provider: 'redis://%env(REDIS_HOST)%:%env(REDIS_PORT)%'
+    default_redis_provider: snc_redis.default
+    pools:
+      some-pool.cache:
+        adapter: cache.adapter.redis
+        # a specific provider, e.g. if you have a snc_redis.clients.cache
+        provider: snc_redis.default
 
   # APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
   #app: cache.adapter.apcu

@@ -1,0 +1,8 @@
+# See https://github.com/snc/SncRedisBundle/tree/master/docs for instructions on how to configure the bundle.
+snc_redis:
+  clients:
+    default:
+      type: predis
+      alias: default
+      dsn: 'redis://%env(REDIS_HOST)%'
+      logging: '%kernel.debug%'
