@@ -12,6 +12,9 @@ More information on [symfony website](https://symfony.com/doc/5.4/reference/requ
 ## Features developed
 Usage [cache system](https://symfony.com/doc/5.4/cache.html#cache-configuration-with-frameworkbundle) (redis).
 
+Alternative on branch [sncredisbundle](https://github.com/jgauthi/poc_symfony5_cache_redis/tree/sncredisbundle) with [bundle SNC](https://github.com/snc/SncRedisBundle).
+
+
 ## Installation
 Command lines:
 

@@ -23,7 +23,7 @@ services:
     networks:
       sfnetwork:
         aliases:
-          - cache
+          - ${REDIS_HOST}
 
 networks:
   sfnetwork:
